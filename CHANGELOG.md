@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-02-23
+
+### Changed
+
+- Rewrote extension UI to be fully programmatic (no XIB/NIB dependency)
+- Search bar and GIF grid now fill the entire extension panel edge-to-edge
+- Collection view items dynamically size to fill available width in a 3-column grid
+- Adopted Auto Layout for search bar and scroll view positioning
+- Used frame-based autoresizing for collection view inside scroll view (fixes layout issues)
+- Eliminated Mail's XIB caching issues by removing dependency on Interface Builder files
+
+### Fixed
+
+- GIF grid no longer renders as tiny circles or a single column
+- No more dead space on sides or bottom of the extension panel
+- Extension layout now reliably matches the designed size on every launch
+
 ## [1.1.0] - 2026-02-23
 
 ### Added
@@ -45,6 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - App sandbox with network client entitlement for Giphy API access
 - Giphy attribution icon in compose toolbar
 
-[unreleased]: https://github.com/marctuinier/GiphyMailExtension/compare/v1.1.0...HEAD
+[unreleased]: https://github.com/marctuinier/GiphyMailExtension/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/marctuinier/GiphyMailExtension/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/marctuinier/GiphyMailExtension/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/marctuinier/GiphyMailExtension/releases/tag/v1.0.0

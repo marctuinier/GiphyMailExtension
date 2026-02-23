@@ -16,8 +16,10 @@ Gif Mail adds a Giphy search panel to Apple Mail's compose window. Search for an
 ## Features
 
 - Search the entire Giphy library from within Mail's compose window
-- Preview GIF results in a scrollable grid
+- Trending GIFs load automatically when the panel opens
+- Preview GIF results in a scrollable 3-column grid
 - Drag and drop GIFs directly into your email
+- Double-click a GIF to insert it instantly
 - Debounced search to keep things responsive
 - Sandboxed and privacy-respecting — only makes network requests to the Giphy API
 
@@ -40,8 +42,8 @@ Gif Mail adds a Giphy search panel to Apple Mail's compose window. Search for an
 
 1. Open Apple Mail and compose a new message.
 2. Click the **Giphy** icon in the compose toolbar.
-3. Type your search query.
-4. Click and drag a GIF into the email body.
+3. Browse trending GIFs, or type a search query.
+4. Drag a GIF into the email body, or double-click to insert.
 
 ## Building from Source
 
@@ -62,9 +64,9 @@ GIFMailSix/                     # Host application (SwiftUI)
 GIFMailSixExtension/            # Mail extension (AppKit + MailKit)
 ├── MailExtension.swift         # MEExtension entry point
 ├── ComposeSessionHandler.swift # MEComposeSessionHandler
-├── ComposeSessionViewController.swift
-├── APIClient.swift             # Giphy API client
-├── YourGifCollectionViewItem.swift
+├── ComposeSessionViewController.swift  # Programmatic UI layout
+├── APIClient.swift             # Giphy API client (search + trending)
+├── YourGifCollectionViewItem.swift     # GIF cell with drag & double-click
 └── Info.plist
 ```
 

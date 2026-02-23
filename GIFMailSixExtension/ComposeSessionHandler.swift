@@ -16,7 +16,7 @@ class ComposeSessionHandler: NSObject, MEComposeSessionHandler {
     }
 
     func viewController(for session: MEComposeSession) -> MEExtensionViewController {
-        return ComposeSessionViewController(nibName: "ComposeSessionViewController", bundle: Bundle.main)
+        return ComposeSessionViewController()
     }
 
     func allowMessageSendForSession(_ session: MEComposeSession, completion: @escaping (Error?) -> Void) {

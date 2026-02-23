@@ -9,23 +9,32 @@ import Cocoa
 
 class YourGifCollectionViewItem: NSCollectionViewItem {
 
-    @IBOutlet weak var gifImageView: NSImageView!
-
+    var gifImageView: NSImageView!
     var gif: Gif?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.view.registerForDraggedTypes([.fileURL])
-        self.view.wantsLayer = true
-        self.view.layer?.cornerRadius = 4
-        self.view.layer?.masksToBounds = true
+    override func loadView() {
+        let container = NSView()
+        container.wantsLayer = true
+        container.layer?.cornerRadius = 4
+        container.layer?.masksToBounds = true
 
-        if let imageView = gifImageView {
-            imageView.imageScaling = .scaleAxesIndependently
-            imageView.imageAlignment = .alignCenter
-            imageView.animates = true
-            imageView.wantsLayer = true
-        }
+        let iv = NSImageView()
+        iv.imageScaling = .scaleAxesIndependently
+        iv.imageAlignment = .alignCenter
+        iv.animates = true
+        iv.wantsLayer = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        container.addSubview(iv)
+
+        NSLayoutConstraint.activate([
+            iv.topAnchor.constraint(equalTo: container.topAnchor),
+            iv.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            iv.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            iv.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+        ])
+
+        self.view = container
+        self.gifImageView = iv
     }
 
     func configure(with gif: Gif) {
