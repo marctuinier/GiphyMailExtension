@@ -16,6 +16,14 @@ class YourGifCollectionViewItem: NSCollectionViewItem {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.registerForDraggedTypes([.fileURL])
+        self.view.wantsLayer = true
+        self.view.layer?.cornerRadius = 4
+        self.view.layer?.masksToBounds = true
+
+        if let imageView = gifImageView {
+            imageView.imageScaling = .scaleAxesIndependently
+            imageView.animates = true
+        }
     }
 
     func configure(with gif: Gif) {
@@ -30,7 +38,23 @@ class YourGifCollectionViewItem: NSCollectionViewItem {
         }.resume()
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        gifImageView?.image = nil
+        gif = nil
+    }
+
+    // Double-click to insert GIF into the email
     override func mouseDown(with event: NSEvent) {
+        if event.clickCount == 2 {
+            guard let collectionView = self.collectionView,
+                  let indexPath = collectionView.indexPath(for: self),
+                  let controller = collectionView.delegate as? ComposeSessionViewController else { return }
+            controller.insertGif(at: indexPath)
+            return
+        }
+
+        // Single click: start drag
         guard let collectionView = self.collectionView,
               collectionView.indexPath(for: self) != nil,
               let draggingSource = collectionView.delegate as? NSCollectionViewDelegate & NSDraggingSource,

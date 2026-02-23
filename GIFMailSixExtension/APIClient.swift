@@ -30,8 +30,18 @@ struct GiphyGif: Codable, Sendable {
 }
 
 final class APIClient: Sendable {
-    // Giphy public beta API key — safe for client-side use
     private static let apiKey = "q2DA8N3jlGIeDbWdGphUZgci4dX8WjRc"
+
+    func fetchTrending(completion: @escaping GIFFetchCallback) {
+        let urlString = "https://api.giphy.com/v1/gifs/trending?api_key=\(Self.apiKey)&limit=25&rating=g"
+
+        guard let url = URL(string: urlString) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+
+        performRequest(url: url, completion: completion)
+    }
 
     func fetchGiphy(withQuery query: String, completion: @escaping GIFFetchCallback) {
         guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
@@ -46,7 +56,11 @@ final class APIClient: Sendable {
             return
         }
 
-        let task = URLSession.shared.dataTask(with: url) { data, _, error in
+        performRequest(url: url, completion: completion)
+    }
+
+    private func performRequest(url: URL, completion: @escaping GIFFetchCallback) {
+        URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
                 completion(.failure(error))
                 return
@@ -64,8 +78,6 @@ final class APIClient: Sendable {
             } catch {
                 completion(.failure(error))
             }
-        }
-
-        task.resume()
+        }.resume()
     }
 }
