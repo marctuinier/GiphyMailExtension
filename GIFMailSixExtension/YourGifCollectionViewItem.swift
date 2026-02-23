@@ -8,80 +8,49 @@
 import Cocoa
 
 class YourGifCollectionViewItem: NSCollectionViewItem {
-    
+
     @IBOutlet weak var gifImageView: NSImageView!
-    
-    var gif: Gif? // Store the gif for later use in drag-and-drop
-    
+
+    var gif: Gif?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("YourGifCollectionViewItem loaded")
-        self.view.registerForDraggedTypes([.fileURL]) // Register for drag operations
+        self.view.registerForDraggedTypes([.fileURL])
     }
-    
+
     func configure(with gif: Gif) {
-        self.gif = gif // Save the gif
-        let url = gif.url
-        print("Attempting to load GIF from URL: \(url)")
+        self.gif = gif
 
-        URLSession.shared.dataTask(with: url) { data, _, error in
-            if let error = error {
-                print("Error loading image: \(error)")
-                return
-            }
+        URLSession.shared.dataTask(with: gif.url) { [weak self] data, _, error in
+            guard error == nil, let data = data, let image = NSImage(data: data) else { return }
 
-            if let data = data, let image = NSImage(data: data) {
-                DispatchQueue.main.async {
-                    self.gifImageView?.canDrawSubviewsIntoLayer = true
-                    self.gifImageView?.image = image
-                    print("Successfully loaded and displayed GIF")
-                }
-            } else {
-                print("Could not initialize NSImage with data")
+            DispatchQueue.main.async {
+                self?.gifImageView?.image = image
             }
         }.resume()
     }
-    
-    // Implement the mouseDown function for drag-and-drop
+
     override func mouseDown(with event: NSEvent) {
-        guard let collectionView = self.collectionView else {
-            print("CollectionView is nil")
-            return
-        }
-        
-        guard collectionView.indexPath(for: self) != nil else {
-            print("Could not get indexPath")
-            return
-        }
-        
-        guard let draggingSource = collectionView.delegate as? NSCollectionViewDelegate & NSDraggingSource else {
-            print("Delegate does not conform to NSDraggingSource")
-            return
-        }
-        
-        guard let gifData = try? Data(contentsOf: self.gif!.url) else {
-            print("Failed to get GIF data")
-            return
-        }
-        
+        guard let collectionView = self.collectionView,
+              collectionView.indexPath(for: self) != nil,
+              let draggingSource = collectionView.delegate as? NSCollectionViewDelegate & NSDraggingSource,
+              let gif = self.gif,
+              let gifData = try? Data(contentsOf: gif.url) else { return }
+
         do {
-            // Create a temporary file to hold the GIF data
-            let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
-            let temporaryFileURL = temporaryDirectoryURL.appendingPathComponent(UUID().uuidString).appendingPathExtension("gif")
-            try gifData.write(to: temporaryFileURL)
-            
-            // Create a pasteboard item with the URL data
+            let tempDir = URL(fileURLWithPath: NSTemporaryDirectory())
+            let tempFile = tempDir.appendingPathComponent(UUID().uuidString).appendingPathExtension("gif")
+            try gifData.write(to: tempFile)
+
             let pasteboardItem = NSPasteboardItem()
-            if let urlData = temporaryFileURL.absoluteString.data(using: .utf8) {
+            if let urlData = tempFile.absoluteString.data(using: .utf8) {
                 pasteboardItem.setData(urlData, forType: .fileURL)
             }
-            
-            // Create a dragging item and start the session
+
             let draggingItem = NSDraggingItem(pasteboardWriter: pasteboardItem)
             draggingItem.setDraggingFrame(self.view.bounds, contents: self.view)
-            
+
             _ = collectionView.beginDraggingSession(with: [draggingItem], event: event, source: draggingSource)
-            print("Started dragging session")
         } catch {
             print("Error creating temporary file: \(error)")
         }

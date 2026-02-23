@@ -13,15 +13,15 @@ enum APIError: String, Error {
     case unexpectedJSONStructure = "Unexpected JSON structure"
 }
 
-typealias GIFFetchCallback = (Result<[String], Error>) -> Void
+typealias GIFFetchCallback = @Sendable (Result<[String], Error>) -> Void
 
-struct GiphyResponse: Codable {
+struct GiphyResponse: Codable, Sendable {
     let data: [GiphyGif]
 }
 
-struct GiphyGif: Codable {
-    struct Images: Codable {
-        struct Downsized: Codable {
+struct GiphyGif: Codable, Sendable {
+    struct Images: Codable, Sendable {
+        struct Downsized: Codable, Sendable {
             let url: String
         }
         let downsized: Downsized
@@ -29,55 +29,43 @@ struct GiphyGif: Codable {
     let images: Images
 }
 
-class APIClient {
+final class APIClient: Sendable {
+    // Giphy public beta API key — safe for client-side use
+    private static let apiKey = "q2DA8N3jlGIeDbWdGphUZgci4dX8WjRc"
+
     func fetchGiphy(withQuery query: String, completion: @escaping GIFFetchCallback) {
-        
-        print("Starting Giphy fetch for query: \(query)")
-        
-        let apiKey = "q2DA8N3jlGIeDbWdGphUZgci4dX8WjRc" 
-        let urlString = "https://api.giphy.com/v1/gifs/search?api_key=\(apiKey)&q=\(query)&limit=25&offset=0&rating=g&lang=en"
-        
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL")
+        guard let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) else {
             completion(.failure(APIError.invalidURL))
             return
         }
-        
-        print("Constructed URL: \(url)")
-        
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+
+        let urlString = "https://api.giphy.com/v1/gifs/search?api_key=\(Self.apiKey)&q=\(encodedQuery)&limit=25&offset=0&rating=g&lang=en"
+
+        guard let url = URL(string: urlString) else {
+            completion(.failure(APIError.invalidURL))
+            return
+        }
+
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
             if let error = error {
-                print("Error during data task: \(error.localizedDescription)")
                 completion(.failure(error))
                 return
             }
-            
+
             guard let data = data else {
-                print("No data received")
                 completion(.failure(APIError.noData))
                 return
             }
-            
-            print("Received data")
-            
+
             do {
-                let jsonDecoder = JSONDecoder()
-                let response = try jsonDecoder.decode(GiphyResponse.self, from: data)
-                
-                print("Successfully decoded JSON data")
-                
+                let response = try JSONDecoder().decode(GiphyResponse.self, from: data)
                 let gifUrls = response.data.map { $0.images.downsized.url }
-                
-                print("Extracted \(gifUrls.count) GIF URLs")
-                
                 completion(.success(gifUrls))
-            } catch let jsonError {
-                print("JSON decoding error: \(jsonError)")
-                completion(.failure(jsonError))
+            } catch {
+                completion(.failure(error))
             }
         }
-        
-        print("Resuming data task")
+
         task.resume()
     }
 }
