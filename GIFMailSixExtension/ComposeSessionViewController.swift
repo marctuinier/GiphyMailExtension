@@ -22,8 +22,8 @@ class ComposeSessionViewController: MEExtensionViewController, NSCollectionViewD
     var searchTimer: Timer?
     let searchDelay: TimeInterval = 1.0
 
-    private let itemSpacing: CGFloat = 4
-    private let columns = 2
+    private let itemSpacing: CGFloat = 2
+    private let columns = 3
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,8 +33,24 @@ class ComposeSessionViewController: MEExtensionViewController, NSCollectionViewD
         giphyCollectionView.dataSource = self
         giphyCollectionView.registerForDraggedTypes([.fileURL])
         giphySearchBar.delegate = self
+        giphySearchBar.placeholderString = "Search GIFs..."
+
+        if let flowLayout = giphyCollectionView.collectionViewLayout as? NSCollectionViewFlowLayout {
+            flowLayout.minimumInteritemSpacing = itemSpacing
+            flowLayout.minimumLineSpacing = itemSpacing
+            flowLayout.sectionInset = NSEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+
+        if let scrollView = giphyCollectionView.enclosingScrollView {
+            scrollView.borderType = .noBorder
+        }
 
         loadTrending()
+    }
+
+    override func viewDidLayout() {
+        super.viewDidLayout()
+        giphyCollectionView.collectionViewLayout?.invalidateLayout()
     }
 
     // MARK: - Data Loading
@@ -104,15 +120,7 @@ class ComposeSessionViewController: MEExtensionViewController, NSCollectionViewD
         let totalSpacing = itemSpacing * CGFloat(columns - 1)
         let availableWidth = collectionView.bounds.width - totalSpacing
         let side = floor(availableWidth / CGFloat(columns))
-        return NSSize(width: side, height: side)
-    }
-
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return itemSpacing
-    }
-
-    func collectionView(_ collectionView: NSCollectionView, layout collectionViewLayout: NSCollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return itemSpacing
+        return NSSize(width: max(side, 10), height: max(side, 10))
     }
 
     // MARK: - NSCollectionViewDelegate

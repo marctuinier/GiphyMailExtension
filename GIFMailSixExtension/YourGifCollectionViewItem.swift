@@ -22,7 +22,9 @@ class YourGifCollectionViewItem: NSCollectionViewItem {
 
         if let imageView = gifImageView {
             imageView.imageScaling = .scaleAxesIndependently
+            imageView.imageAlignment = .alignCenter
             imageView.animates = true
+            imageView.wantsLayer = true
         }
     }
 
@@ -44,7 +46,6 @@ class YourGifCollectionViewItem: NSCollectionViewItem {
         gif = nil
     }
 
-    // Double-click to insert GIF into the email
     override func mouseDown(with event: NSEvent) {
         if event.clickCount == 2 {
             guard let collectionView = self.collectionView,
@@ -54,7 +55,6 @@ class YourGifCollectionViewItem: NSCollectionViewItem {
             return
         }
 
-        // Single click: start drag
         guard let collectionView = self.collectionView,
               collectionView.indexPath(for: self) != nil,
               let draggingSource = collectionView.delegate as? NSCollectionViewDelegate & NSDraggingSource,

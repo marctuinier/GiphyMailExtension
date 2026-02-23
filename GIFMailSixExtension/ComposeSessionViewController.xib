@@ -16,28 +16,30 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="280" height="400"/>
-            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <rect key="frame" x="0.0" y="0.0" width="255" height="259"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <searchField wantsLayer="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" textCompletion="NO" id="VoV-H0-dBe">
-                    <rect key="frame" x="10" y="368" width="260" height="22"/>
+                <searchField wantsLayer="YES" verticalHuggingPriority="750" fixedFrame="YES" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VoV-H0-dBe">
+                    <rect key="frame" x="20" y="223" width="215" height="22"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Search GIFs..." usesSingleLineMode="YES" bezelStyle="round" id="sTC-Tf-c1B">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </searchFieldCell>
                 </searchField>
-                <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYQ-9n-Qbg">
-                    <rect key="frame" x="10" y="10" width="260" height="348"/>
+                <scrollView wantsLayer="YES" fixedFrame="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYQ-9n-Qbg">
+                    <rect key="frame" x="20" y="20" width="215" height="195"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" id="QWF-Qb-dpb">
-                        <rect key="frame" x="1" y="1" width="258" height="346"/>
+                        <rect key="frame" x="1" y="1" width="213" height="193"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView id="gFK-35-n1a">
-                                <rect key="frame" x="0.0" y="0.0" width="258" height="346"/>
+                                <rect key="frame" x="0.0" y="0.0" width="213" height="193"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="4" minimumLineSpacing="4" id="0hr-Q6-qyf">
-                                    <size key="itemSize" width="95" height="95"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="3" minimumLineSpacing="3" id="0hr-Q6-qyf">
+                                    <size key="itemSize" width="68" height="68"/>
                                 </collectionViewFlowLayout>
                                 <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </collectionView>
@@ -48,20 +50,11 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="234-be-Dtg">
-                        <rect key="frame" x="243" y="1" width="16" height="346"/>
+                        <rect key="frame" x="198" y="1" width="16" height="193"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
             </subviews>
-            <constraints>
-                <constraint firstItem="VoV-H0-dBe" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="10" id="top1"/>
-                <constraint firstItem="VoV-H0-dBe" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="lead1"/>
-                <constraint firstAttribute="trailing" secondItem="VoV-H0-dBe" secondAttribute="trailing" constant="10" id="trail1"/>
-                <constraint firstItem="uYQ-9n-Qbg" firstAttribute="top" secondItem="VoV-H0-dBe" secondAttribute="bottom" constant="10" id="top2"/>
-                <constraint firstItem="uYQ-9n-Qbg" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="lead2"/>
-                <constraint firstAttribute="trailing" secondItem="uYQ-9n-Qbg" secondAttribute="trailing" constant="10" id="trail2"/>
-                <constraint firstAttribute="bottom" secondItem="uYQ-9n-Qbg" secondAttribute="bottom" constant="10" id="bot2"/>
-            </constraints>
             <point key="canvasLocation" x="26.5" y="128.5"/>
         </customView>
     </objects>
