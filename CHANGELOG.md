@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Renamed app from "GIFMailSix" to "Gif Mail"
+- Updated extension display name to "Gif Mail Extension"
 - Updated project for Swift 6 and modern macOS compatibility (macOS 14+)
 - Updated deployment targets to macOS 14.0 (Sonoma)
 - Improved URL encoding for Giphy API search queries

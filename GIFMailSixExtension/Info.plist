@@ -16,7 +16,7 @@
 				<key>MEComposeIcon</key>
 				<string>giphy</string>
 				<key>MEComposeIconToolTip</key>
-				<string>Add giphy to your mail</string>
+				<string>Add a GIF to your email</string>
 			</dict>
 			<key>MEExtensionCapabilities</key>
 			<array>

@@ -11,7 +11,7 @@
 
 ## About
 
-GiphyMailExtension adds a Giphy search panel to Apple Mail's compose window. Search for any GIF, then drag and drop it directly into your email — no copy-pasting URLs or downloading files.
+Gif Mail adds a Giphy search panel to Apple Mail's compose window. Search for any GIF, then drag and drop it directly into your email — no copy-pasting URLs or downloading files.
 
 ## Features
 
@@ -29,10 +29,10 @@ GiphyMailExtension adds a Giphy search panel to Apple Mail's compose window. Sea
 
 1. Go to the [**Releases**](https://github.com/marctuinier/GiphyMailExtension/releases) page.
 2. Download the latest `.dmg` file.
-3. Open the DMG and drag **GIFMailSix** into your **Applications** folder.
-4. Launch GIFMailSix once to register the extension.
+3. Open the DMG and drag **Gif Mail** into your **Applications** folder.
+4. Launch Gif Mail once to register the extension.
 5. Open **System Settings → General → Login Items & Extensions → Mail Extensions**.
-6. Enable **GIFMailSixExtension**.
+6. Enable **Gif Mail Extension**.
 
 > **Note:** Since this app is not from the App Store, you may need to right-click the app and select **Open** on the first launch. If that doesn't work, go to **System Settings > Privacy & Security > Open Anyway**.
 
