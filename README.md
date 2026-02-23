@@ -1,8 +1,17 @@
 # GiphyMailExtension
 
-A native macOS Mail extension that lets you search and insert GIFs from [Giphy](https://giphy.com) directly into your emails.
+> A native macOS Mail extension to search and insert GIFs from Giphy directly into your emails.
+
+[![Swift](https://img.shields.io/badge/Swift-5-orange.svg)](https://swift.org)
+[![Platform](https://img.shields.io/badge/platform-macOS-blue.svg)](https://www.apple.com/macos)
+[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Giphy](https://img.shields.io/badge/powered%20by-Giphy-ff69b4.svg)](https://giphy.com)
 
 ![Demo](home-gif.gif)
+
+## About
+
+GiphyMailExtension adds a Giphy search panel to Apple Mail's compose window. Search for any GIF, then drag and drop it directly into your email — no copy-pasting URLs or downloading files.
 
 ## Features
 
@@ -15,38 +24,33 @@ A native macOS Mail extension that lets you search and insert GIFs from [Giphy](
 ## Requirements
 
 - macOS 14.0 (Sonoma) or later
-- Apple Mail
 
 ## Installation
 
-### From DMG (recommended)
+1. Go to the [**Releases**](https://github.com/marctuinier/GiphyMailExtension/releases) page.
+2. Download the latest `.dmg` file.
+3. Open the DMG and drag **GIFMailSix** into your **Applications** folder.
+4. Launch GIFMailSix once to register the extension.
+5. Open **System Settings → General → Login Items & Extensions → Mail Extensions**.
+6. Enable **GIFMailSixExtension**.
 
-1. Download the latest `.dmg` from [Releases](https://github.com/marctuinier/GiphyMailExtension/releases)
-2. Open the DMG and drag **GIFMailSix** to your Applications folder
-3. Launch GIFMailSix once to register the extension
-4. Open **System Settings → General → Login Items & Extensions → Mail Extensions**
-5. Enable **GIFMailSixExtension**
-
-### From Source
-
-1. Clone this repository
-2. Open `GIFMailSix.xcodeproj` in Xcode
-3. Build and run the `GIFMailSix` scheme
-4. Enable the extension in System Settings as described above
+> **Note:** Since this app is not from the App Store, you may need to right-click the app and select **Open** on the first launch. If that doesn't work, go to **System Settings > Privacy & Security > Open Anyway**.
 
 ## Usage
 
-1. Open Apple Mail and compose a new message
-2. Click the **Giphy** icon in the compose toolbar
-3. Type your search query
-4. Click and drag a GIF into the email body
+1. Open Apple Mail and compose a new message.
+2. Click the **Giphy** icon in the compose toolbar.
+3. Type your search query.
+4. Click and drag a GIF into the email body.
 
-## Tech Stack
+## Building from Source
 
-- **Swift** — 100%
-- **MailKit** — Apple's framework for Mail extensions
-- **Giphy API** — GIF search and retrieval
-- **AppKit** — `NSCollectionView` for the GIF grid, `NSDraggingSource` for drag-and-drop
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/marctuinier/GiphyMailExtension.git
+   ```
+2. Open `GIFMailSix.xcodeproj` in Xcode.
+3. Build and run (`Cmd + R`).
 
 ## Project Structure
 
@@ -66,8 +70,4 @@ GIFMailSixExtension/            # Mail extension (AppKit + MailKit)
 
 ## License
 
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
-## Attribution
-
-GIF search powered by [Giphy](https://giphy.com).
+This project is licensed under the [MIT License](LICENSE).
